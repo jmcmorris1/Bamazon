@@ -38,12 +38,13 @@ function showInventory() {
                 message: "How many of this item would you like to buy?",
             }
         ]).then(function(order) {
-      
+        	console.log(order);
             var quantity = order.quantity;
-            var item_id = order.id;
+            var item_id = order.item;
+            var selectedItem = order;
             connection.query('SELECT * FROM products WHERE item_id=' + item_id, function(err, item_id) {
                 if (err) throw err;
-                if (selectedItem[0].stock_quantity - quantity >= 0) {
+                if (order.quantity > item_id.stock_quantity) {
                     console.log("Quantity in Stock: ");
                     console.log("You will be charged " (order.quantity * selectedItem[0].price) + " dollars.");
                     
